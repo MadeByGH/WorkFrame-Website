@@ -122,7 +122,7 @@ http://localhost:3000/landing-demo
 🔒 Buy button clicked: {
   product: 'quickread',
   clientReferenceId: 'quickread_sess_1704067200000_abc123def_1704067300000',
-  enhancedUrl: 'https://buy.stripe.com/aFa14m87e3xhdlx3wVfrW01?client_reference_id=quickread_sess_...' 
+  enhancedUrl: 'https://workframe.gumroad.com/l/quickread?layout=profile&client_reference_id=quickread_sess_...' 
 }
 ```
 
@@ -171,21 +171,20 @@ STRIPE_WEBHOOK_SECRET=your_webhook_secret
 DISCORD_WEBHOOK_URL=your_discord_webhook
 ```
 
-## Stripe Dashboard Configuration
+## Gumroad Configuration
 
-For the post-purchase redirect flow to work, you need to configure your existing Stripe Payment Links:
+For the post-purchase redirect flow to work, you need to configure your existing Gumroad products:
 
-### Recommended: Update Payment Link Success URL
-1. Go to your Stripe Dashboard → Payment Links
-2. Edit your existing QuickRead payment link: `https://buy.stripe.com/6oUdR873ad7R2GTc3rfrW00`
-3. Set the success URL to: `https://yourdomain.com/api/purchase-redirect?session_id={CHECKOUT_SESSION_ID}`
+### Recommended: Update Product Success URL
+1. Go to your Gumroad Dashboard → Products
+2. Edit your existing QuickRead product: `https://workframe.gumroad.com/l/quickread?layout=profile`
+3. Set the redirect URL to: `https://yourdomain.com/api/purchase-redirect`
 4. Users will be redirected to your product after purchase
 
 **How it works:**
-- Client-side JavaScript enhances Stripe URLs with `client_reference_id` parameter
+- Client-side JavaScript enhances Gumroad URLs with `client_reference_id` parameter
 - Attribution data is encoded in the `client_reference_id` (format: `product_userid_requestid_timestamp`)
-- After payment, Stripe redirects to your success URL with the session ID
-- Your backend retrieves the session from Stripe API to get the `client_reference_id`
+- After payment, Gumroad redirects to your success URL
 - Attribution data is decoded and purchase completion is tracked
 - User is redirected to their purchased product
 

@@ -15,19 +15,19 @@ import Script from "next/script"
 export default function QuickreadClientPage() {
   const { handleBuyButtonClick } = useLandingPageAttribution();
 
-  // Your actual Stripe checkout URL
-  const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/6oUdR873ad7R2GTc3rfrW00'; // Using your original QuickRead URL
+  // Your actual Gumroad checkout URL
+  const CHECKOUT_URL = 'https://workframe.gumroad.com/l/quickread?layout=profile';
   
   // Handle checkout button clicks
   const handleCheckoutClick = () => {
-    const enhancedUrl = handleBuyButtonClick('quickread', STRIPE_CHECKOUT_URL);
+    const enhancedUrl = handleBuyButtonClick('quickread', CHECKOUT_URL);
     
     // Track Reddit conversion event
     if (typeof window !== 'undefined' && window.rdt) {
       window.rdt('track', 'Buy_Button_Click');
     }
     
-    console.log('🔗 Original Stripe URL:', STRIPE_CHECKOUT_URL);
+    console.log('🔗 Original Gumroad URL:', CHECKOUT_URL);
     console.log('✨ Enhanced with attribution:', enhancedUrl);
     
     return enhancedUrl;
