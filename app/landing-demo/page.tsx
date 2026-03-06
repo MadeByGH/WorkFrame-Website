@@ -6,20 +6,20 @@ import { Button } from '@/components/ui/button';
 export default function LandingDemoPage() {
   const { attribution, handleBuyButtonClick } = useLandingPageAttribution();
 
-  const QUICKREAD_STRIPE_URL = 'https://buy.stripe.com/aFa14m87e3xhdlx3wVfrW01';
+  const QUICKREAD_CHECKOUT_URL = 'https://workframe.gumroad.com/l/quickread?layout=profile';
 
   const handleQuickReadPurchase = () => {
-    const enhancedUrl = handleBuyButtonClick('quickread', QUICKREAD_STRIPE_URL);
+    const enhancedUrl = handleBuyButtonClick('quickread', QUICKREAD_CHECKOUT_URL);
     
-    // In production, this would open the Stripe checkout
+    // In production, this would open the Gumroad checkout
     // For demo, we'll just log and show what would happen
-    console.log('🚀 Would open Stripe checkout with enhanced URL:', enhancedUrl);
+    console.log('🚀 Would open Gumroad checkout with enhanced URL:', enhancedUrl);
     
-    // Uncomment this line to actually open Stripe checkout:
+    // Uncomment this line to actually open Gumroad checkout:
     // window.open(enhancedUrl, '_blank');
     
     // For demo, let's simulate what happens after purchase
-    alert(`Demo: Would open Stripe checkout with:\\n\\n${enhancedUrl}\\n\\nAfter purchase, user would be redirected back to /api/purchase-redirect`);
+    alert(`Demo: Would open Gumroad checkout with:\\n\\n${enhancedUrl}`);
   };
 
   return (

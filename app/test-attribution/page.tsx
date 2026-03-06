@@ -9,12 +9,12 @@ export default function TestAttributionPage() {
   const { enhanceStripeUrl } = useCheckoutTracking();
   const [enhancedUrl, setEnhancedUrl] = useState<string>('');
 
-  const ORIGINAL_STRIPE_URL = 'https://buy.stripe.com/aFa14m87e3xhdlx3wVfrW01';
+  const ORIGINAL_CHECKOUT_URL = 'https://workframe.gumroad.com/l/quickread?layout=profile';
 
   useEffect(() => {
     // Generate enhanced URL when attribution loads
     if (attribution) {
-      const enhanced = enhanceStripeUrl(ORIGINAL_STRIPE_URL);
+      const enhanced = enhanceStripeUrl(ORIGINAL_CHECKOUT_URL);
       setEnhancedUrl(enhanced);
     }
   }, [attribution, enhanceStripeUrl]);
@@ -48,13 +48,13 @@ export default function TestAttributionPage() {
 
       {/* URL Comparison */}
       <div className="mb-8 p-4 rounded-lg border">
-        <h2 className="text-xl font-semibold mb-4">Stripe URL Enhancement</h2>
+        <h2 className="text-xl font-semibold mb-4">Checkout URL Enhancement</h2>
         
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Original Stripe URL:</label>
+            <label className="block text-sm font-medium mb-1">Original Checkout URL:</label>
             <code className="block p-2 bg-gray-100 rounded text-sm break-all">
-              {ORIGINAL_STRIPE_URL}
+              {ORIGINAL_CHECKOUT_URL}
             </code>
           </div>
           

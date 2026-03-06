@@ -22,17 +22,17 @@ async function sendDiscordWebhook({ action }: {action: string}) {
 export default function ZettelClientPage() {
   const { handleBuyButtonClick } = useLandingPageAttribution();
   
-  // Your Zettelkasten Stripe URL (update this to your actual URL)
-  const ZETTELKASTEN_STRIPE_URL = 'https://buy.stripe.com/aFa14m87e3xhdlx3wVfrW01';
+  // Your Gumroad checkout URL
+  const ZETTELKASTEN_CHECKOUT_URL = 'https://workframe.gumroad.com/l/zettelkasten?layout=profile';
   
   // Handle checkout button clicks
   const handleCheckoutClick = () => {
-    const enhancedUrl = handleBuyButtonClick('zettelkasten', ZETTELKASTEN_STRIPE_URL);
+    const enhancedUrl = handleBuyButtonClick('zettelkasten', ZETTELKASTEN_CHECKOUT_URL);
     
-    console.log('🔗 Original Stripe URL:', ZETTELKASTEN_STRIPE_URL);
+    console.log('🔗 Original Gumroad URL:', ZETTELKASTEN_CHECKOUT_URL);
     console.log('✨ Enhanced with attribution:', enhancedUrl);
     
-    // Open Stripe checkout
+    // Open Gumroad checkout
     window.open(enhancedUrl, '_blank');
   };
 

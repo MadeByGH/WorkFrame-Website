@@ -229,24 +229,24 @@ export function parseAttributionFromMetadata(metadata: Record<string, string>): 
 /**
  * Configuration for different products
  */
-export const PRODUCT_STRIPE_CONFIG = {
+export const PRODUCT_CHECKOUT_CONFIG = {
   quickread: {
     priceInCents: 1200, // $12.00
     currency: 'usd',
     name: 'QuickRead by WorkFrame',
-    existingPaymentLink: 'https://buy.stripe.com/6oUdR873ad7R2GTc3rfrW00'
+    existingPaymentLink: 'https://workframe.gumroad.com/l/quickread?layout=profile'
   },
   zettelkasten: {
     priceInCents: 2500, // $25.00 (update with actual price)
     currency: 'usd', 
     name: 'Zettelkasten by WorkFrame',
-    existingPaymentLink: 'https://buy.stripe.com/aFa14m87e3xhdlx3wVfrW01' // Update with actual Zettelkasten payment link
+    existingPaymentLink: 'https://workframe.gumroad.com/l/zettelkasten?layout=profile'
   }
 } as const;
 
 /**
- * Get Stripe configuration for a product
+ * Get checkout configuration for a product
  */
 export function getStripeConfigForProduct(productSlug: string) {
-  return PRODUCT_STRIPE_CONFIG[productSlug as keyof typeof PRODUCT_STRIPE_CONFIG];
+  return PRODUCT_CHECKOUT_CONFIG[productSlug as keyof typeof PRODUCT_CHECKOUT_CONFIG];
 }
