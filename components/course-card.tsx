@@ -10,16 +10,18 @@ type CourseCardProps = {
 
 export function CourseCard({ title = "Course Title", blurb = "Short blurb", href = "" }: CourseCardProps) {
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <CardTitle className="text-lg">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="mb-3 text-sm text-muted-foreground">{blurb}</p>
-        <Link href={href} className="inline-flex items-center text-sm font-medium underline">
-          See syllabus <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
-        </Link>
-      </CardContent>
-    </Card>
+    <Link href={href} className="block h-full">
+      <Card className="h-full">
+        <CardHeader>
+          <CardTitle className="text-lg">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="mb-3 text-sm text-muted-foreground">{blurb}</p>
+          <span className="inline-flex items-center text-sm font-medium underline">
+            See syllabus <ArrowRight className="ml-1 h-4 w-4" aria-hidden="true" />
+          </span>
+        </CardContent>
+      </Card>
+    </Link>
   )
 }
