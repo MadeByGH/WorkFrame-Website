@@ -8,22 +8,21 @@ The simplified attribution system implements the following flow:
 
 **Complete Purchase & Redirect Flow:**
 ```
-Landing Page → Buy Button Click → Stripe Checkout → Purchase Success → Product Redirect
+Landing Page → Buy Button Click → Gumroad Checkout → Purchase Success → Product Redirect
 ```
 
 **Detailed Flow:**
 ```
 1. User arrives on landing page (UTM tracking handled by analytics)
-2. User clicks buy button → Stripe URL enhanced with client_reference_id
-3. User completes Stripe checkout → client_reference_id stored in session
-4. Stripe redirects to /api/purchase-redirect?session_id=cs_xxx
-5. Server validates purchase & extracts product from client_reference_id
-6. User redirected to their purchased product (ChatGPT/Notion)
+2. User clicks buy button → Gumroad URL enhanced with client_reference_id
+3. User completes Gumroad checkout
+4. Gumroad redirects to /api/purchase-redirect?product=<slug>
+5. Server validates product slug and redirects user to their product
 ```
 
 **Product Destinations:**
 - `quickread` → https://chatgpt.com/g/g-689bf5fb269481918fccb4ffc7c32451-quickread
-- `zettelkasten` → https://www.notion.so/Zettelkasten-26de70b7724b8088870acb39d8538f9e?duplicate=true&from=stripe
+- `zettelkasten` → https://www.notion.so/Zettelkasten-26de70b7724b8088870acb39d8538f9e?duplicate=true&from=gumroad
 
 ## Files Created
 
@@ -135,24 +134,21 @@ http://localhost:3000/landing-demo?utm_source=google&utm_medium=cpc&utm_campaign
 #### Test Post-Purchase Redirect
 Simulate a completed purchase:
 ```
-http://localhost:3000/api/purchase-redirect?session_id=test-session-123
+http://localhost:3000/api/purchase-redirect?product=quickread
 ```
 
 Expected result:
-- Mock session includes `client_reference_id`: `quickread_sess_1704067200000_abc123def_1704067300000`
-- Product extracted: `quickread`
-- Session ID extracted for correlation: `sess_1704067200000_abc123def`
-- `purchase_completed` event logged to PostHog
-- HTTP 302 redirect to QuickRead ChatGPT
+- Product slug `quickread` validated against allowlist
+- HTTP 200 JSON response confirming valid product (redirect to product destination is TODO — see TODO Items below)
 
 #### Full Flow
 1. **Landing**: User arrives on landing page → session generated, page view tracked
-2. **Buy Click**: Click buy button → Stripe URL enhanced, buy event tracked
-3. **Checkout**: User completes Stripe payment → `client_reference_id` preserved
-4. **Success**: Stripe redirects to purchase-redirect endpoint
-5. **Validation**: Server extracts product and session from `client_reference_id`
-6. **Analytics**: Purchase completion logged with session correlation
-7. **Product**: User redirected to their purchased product
+2. **Buy Click**: Click buy button → Gumroad URL enhanced with attribution, buy event tracked
+3. **Checkout**: User completes Gumroad checkout
+4. **Success**: Gumroad redirects to purchase-redirect endpoint with `?product=<slug>`
+5. **Validation**: Server validates product slug
+6. **Analytics**: Purchase completion logged with session correlation (TODO)
+7. **Product**: User redirected to their purchased product (TODO)
 
 ## Environment Variables Required
 
@@ -163,10 +159,6 @@ Make sure these are set in your `.env.local`:
 NEXT_PUBLIC_POSTHOG_KEY=your_posthog_key
 NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
 
-# Stripe (for webhook signature verification - TODO)
-STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_WEBHOOK_SECRET=your_webhook_secret
-
 # Discord (existing functionality)
 DISCORD_WEBHOOK_URL=your_discord_webhook
 ```
@@ -175,24 +167,22 @@ DISCORD_WEBHOOK_URL=your_discord_webhook
 
 For the post-purchase redirect flow to work, you need to configure your existing Gumroad products:
 
-### Recommended: Update Product Success URL
+### Recommended: Update Product Redirect URL
 1. Go to your Gumroad Dashboard → Products
-2. Edit your existing QuickRead product: `https://workframe.gumroad.com/l/quickread?layout=profile`
-3. Set the redirect URL to: `https://yourdomain.com/api/purchase-redirect`
-4. Users will be redirected to your product after purchase
+2. Edit your **QuickRead** product
+3. Under **Summary/Details**, set the redirect URL to:
+   ```
+   https://yourdomain.com/api/purchase-redirect?product=quickread
+   ```
+4. For the **Zettelkasten** product, set:
+   ```
+   https://yourdomain.com/api/purchase-redirect?product=zettelkasten
+   ```
 
-**How it works:**
-- Client-side JavaScript enhances Gumroad URLs with `client_reference_id` parameter
-- Attribution data is encoded in the `client_reference_id` (format: `product_userid_requestid_timestamp`)
-- After payment, Gumroad redirects to your success URL
-- Attribution data is decoded and purchase completion is tracked
-- User is redirected to their purchased product
-
-### Webhook Configuration
-1. In Stripe Dashboard → Webhooks
-2. Add endpoint: `https://yourdomain.com/api/stripe/webhook`
-3. Select events: `checkout.session.completed`
-4. Copy webhook signing secret to `STRIPE_WEBHOOK_SECRET`
+**How it works (current implementation):**
+- The `/api/purchase-redirect` endpoint accepts a `?product=` query parameter
+- It validates the product slug against the allowlist (`quickread`, `zettelkasten`)
+- Full post-purchase product redirect and analytics tracking are **TODO** — see TODO Items below
 
 ## Features Implemented
 
@@ -206,10 +196,8 @@ For the post-purchase redirect flow to work, you need to configure your existing
 - **REQ-3.2.1 to REQ-3.2.5**: Complete analytics event schemas
 
 ### ⚠️ TODO Items
-1. **Stripe Signature Verification**: Currently commented out in webhook handler
-2. **Production Environment Variables**: Set up proper PostHog and Stripe keys
-3. **Metadata Handling**: Client component can't export metadata (consider layout approach)
-4. **Additional Product Pages**: Only QuickRead page updated so far
+1. **Post-Purchase Redirect**: `/api/purchase-redirect` currently validates the product slug but does not yet redirect users to their product or log analytics
+2. **Production Environment Variables**: Set up proper PostHog keys
 
 ## System Architecture
 
@@ -219,17 +207,17 @@ For the post-purchase redirect flow to work, you need to configure your existing
 1. User arrives on landing page → Session ID generated, UTM params captured
 2. Page view tracked to PostHog with session data
 3. User clicks buy button → `buy_button_clicked` event logged
-4. Stripe URL enhanced with `client_reference_id` (format: `product_sessionid_timestamp`)
-5. User completes Stripe checkout → `client_reference_id` stored in session
-6. Stripe redirects to `/api/purchase-redirect?session_id=cs_xxx`
-7. Server retrieves session from Stripe API and extracts product from `client_reference_id`
-8. `purchase_completed` event logged with session correlation
-9. User redirected to purchased product (ChatGPT/Notion) with access
+4. Gumroad URL enhanced with `client_reference_id` (format: `product_sessionid_timestamp`)
+5. User completes Gumroad checkout
+6. Gumroad redirects to `/api/purchase-redirect?product=<slug>`
+7. Server validates product slug
+8. `purchase_completed` event logged (TODO)
+9. User redirected to purchased product (ChatGPT/Notion) with access (TODO)
 
 ### Analytics Events Schema
 - `landing_page_view`: User arrived on landing page (with UTM data)
-- `buy_button_clicked`: User clicked buy button (with enhanced Stripe URL)
-- `purchase_completed`: Purchase completed via Stripe (with session correlation)
+- `buy_button_clicked`: User clicked buy button (with enhanced Gumroad URL)
+- `purchase_completed`: Purchase completed (with session correlation — TODO)
 
 ### Attribution Cookie Format
 ```json
@@ -269,4 +257,3 @@ Check server console for:
 - All user inputs are sanitized and validated
 - Attribution cookies are httpOnly in production
 - Request IDs prevent event correlation attacks
-- Stripe webhook signatures should be verified (TODO)
