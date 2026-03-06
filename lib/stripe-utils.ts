@@ -245,7 +245,7 @@ export const PRODUCT_CHECKOUT_CONFIG = {
 } as const;
 
 /**
- * Get Stripe configuration for a product
+ * Get checkout configuration for a product
  */
 export function getStripeConfigForProduct(productSlug: string) {
   return PRODUCT_CHECKOUT_CONFIG[productSlug as keyof typeof PRODUCT_CHECKOUT_CONFIG];
