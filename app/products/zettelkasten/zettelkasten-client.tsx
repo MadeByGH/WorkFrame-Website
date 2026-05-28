@@ -9,7 +9,7 @@ export default function ZettelClientPage() {
             Zettelkasten Toolbox
           </span>
           <h1 className="mt-5 text-4xl font-bold tracking-tight md:text-5xl">
-            Stop losing your best ideas. Build a durable knowledge graph in Notion.
+            Stop losing your best ideas with a durable knowledge graph in Notion.
           </h1>
           <p className="mt-4 max-w-3xl text-lg text-muted-foreground">
             Zettelkasten Toolbox is a lightweight template that turns scattered highlights into connected notes, topics,
@@ -17,10 +17,12 @@ export default function ZettelClientPage() {
           </p>
           <p className="mt-4 max-w-4xl text-base text-muted-foreground">
             If you&apos;re a curious reader, creator, or builder with a pile of highlights, notes, and half-formed ideas,
-            this free Zettelkasten Toolbox turns them into a durable, connected knowledge graph in Notion—so you can
-            capture faster, recall what matters, and see the links between ideas that spark clearer thinking and better
-            writing; and each week in <em>Verstreuen</em>, I&apos;ll share the top three notes I added (and the connections
-            they unlocked) so you can watch the system in action and borrow the patterns for your own work.
+            this free Zettelkasten Toolbox turns them into a durable, connected knowledge graph in Notion.
+          </p>
+          <p className="mt-3 max-w-4xl text-base text-muted-foreground">
+            You can capture faster, recall what matters, and see the links between ideas that spark clearer thinking and
+            better writing. Each week in <em>Verstreuen</em>, I&apos;ll share the top 3 notes I added (and the
+            connections they unlocked) so you can watch the system in action and borrow the patterns for your own work.
           </p>
         </div>
       </section>
@@ -47,7 +49,7 @@ export default function ZettelClientPage() {
         <div className="mx-auto max-w-[920px] px-4 py-14 md:px-6 md:py-16">
           <h2 className="text-2xl font-semibold tracking-tight">Preview</h2>
           <p className="mt-3 text-muted-foreground">
-            Notes → Topic → Source triangle + “This Week&apos;s Notes” view.
+            Notes → Topics → Sources triangle + “This Week&apos;s Notes” view.
           </p>
           <div className="mt-6 overflow-hidden rounded-lg border bg-white">
             <img
@@ -70,7 +72,9 @@ export default function ZettelClientPage() {
         <div className="mt-6">
           <NewsletterForm />
         </div>
-        <p className="mt-10 text-sm font-medium uppercase tracking-wide text-muted-foreground">This template is the tool. The newsletter is the practice.</p>
+        <p className="mt-10 text-sm font-medium uppercase tracking-wide text-muted-foreground">
+          This template is the tool. The newsletter is the practice.
+        </p>
         <p className="mt-2 max-w-3xl text-muted-foreground">
           Each week in <em>Verstreuen</em>, I publish a short reflection on the top 3 notes I added to my Zettelkasten and
           explicitly show the connections between them—what they changed, what they clarified, and what they unlocked.
