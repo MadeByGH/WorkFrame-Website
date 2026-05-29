@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 
 export const metadata = {
   title: "Account — Settings",
@@ -20,7 +19,6 @@ export default function SettingsPage() {
               <Input placeholder="First name" />
               <Input placeholder="Last name" />
               <Input placeholder="Email" />
-              <Button className="bg-indigo-600 hover:bg-indigo-700">Save</Button>
             </div>
           </CardContent>
         </Card>
@@ -36,9 +34,6 @@ export default function SettingsPage() {
           <CardContent className="pt-6">
             <h3 className="font-medium">Data export</h3>
             <p className="mt-2 text-sm text-muted-foreground">Export your notes anytime.</p>
-            <Button variant="outline" className="mt-3 bg-transparent">
-              Export
-            </Button>
           </CardContent>
         </Card>
       </div>

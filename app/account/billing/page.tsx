@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 
 export const metadata = {
   title: "Account — Billing & Plans",
@@ -15,19 +14,12 @@ export default function BillingPage() {
           <CardContent className="pt-6">
             <h3 className="font-medium">Current plan</h3>
             <p className="mt-1 text-sm text-muted-foreground">Trial — 14 days remaining</p>
-            <div className="mt-4 flex gap-3">
-              <Button className="bg-indigo-600 hover:bg-indigo-700">Change plan</Button>
-              <Button variant="outline">Cancel</Button>
-            </div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-6">
             <h3 className="font-medium">Invoices</h3>
             <p className="mt-1 text-sm text-muted-foreground">No invoices yet.</p>
-            <Button variant="outline" className="mt-4 bg-transparent">
-              Download latest
-            </Button>
           </CardContent>
         </Card>
       </div>

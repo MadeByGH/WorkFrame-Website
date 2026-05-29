@@ -1,6 +1,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export const metadata = {
   title: "Course — How to Read More & Remember What You’ve Read",
@@ -16,9 +16,10 @@ export default function ReadMoreCourse() {
           <p className="mt-3 text-lg text-muted-foreground">
             A practical system for choosing what to read, building the habit, and capturing ideas you’ll use later.
           </p>
-          <div className="mt-6 flex gap-3">
-            <Button className="bg-indigo-600 hover:bg-indigo-700">Enroll now</Button>
-            <Button variant="outline">See syllabus</Button>
+          <div className="mt-6">
+            <Link href="/account/onboarding" className="text-indigo-700 hover:underline">
+              Enroll now
+            </Link>
           </div>
         </div>
         <Card>
@@ -37,7 +38,7 @@ export default function ReadMoreCourse() {
         </Card>
       </header>
 
-      <section className="mt-12">
+      <section id="syllabus" className="mt-12">
         <h2 className="text-xl font-semibold">Syllabus</h2>
         <Accordion type="single" collapsible className="mt-4">
           <AccordionItem value="m1">
