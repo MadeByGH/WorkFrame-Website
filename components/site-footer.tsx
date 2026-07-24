@@ -36,12 +36,12 @@ export function SiteFooter() {
                 </Link>
               </li> */}
               <li>
-                <Link className="hover:underline" href="/">
+                <Link className="hover:underline" href="/courses">
                   Courses
                 </Link>
               </li>
               <li>
-                <Link className="hover:underline" href="/">
+                <Link className="hover:underline" href="/commerce">
                   Commerce
                 </Link>
               </li>
@@ -52,17 +52,12 @@ export function SiteFooter() {
             <h4 className="text-sm font-semibold mb-3">Company</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link className="hover:underline" href="/">
+                <Link className="hover:underline" href="/about">
                   About
                 </Link>
               </li>
               <li>
                 <span className="text-muted-foreground">Careers (future)</span>
-              </li>
-              <li>
-                <Link className="hover:underline" href="/">
-                  Press Kit
-                </Link>
               </li>
               <li>
                 <Link className="hover:underline" href="/contact">
